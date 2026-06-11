@@ -7,7 +7,7 @@ def ingresar_calificaciones():
     numero = 1
     salir = ''
 
-    while salir.lower() != "x":
+    while salir.lower() != "n":
         materia = input(f"Ingrese el nombre de la materia #{numero}: ")
 
         while len(materia.strip()) < 1:
@@ -15,7 +15,7 @@ def ingresar_calificaciones():
 
         calificación = input("Ingrese la calificación (0-10): ")
 
-        # Validar calificación vacía:
+        # Validar calificación:
         calificación_es_válida = validar_calificación(calificación)
 
         while not calificación_es_válida:
@@ -29,7 +29,7 @@ def ingresar_calificaciones():
 
         numero += 1
 
-        salir = input("Si desea finalizar presione la tecla [x] y cualquier otra tecla para continuar. ")
+        salir = input("¿Desea continuar? (s/n) ")
         
     print("Entrada de datos finalizada.")
     return MATERIAS, CALIFICACIONES
@@ -51,25 +51,24 @@ def determinar_estado(calificaciones, umbral = 5.0):
     return indices_aprobadas, indices_reprobadas
 
 def encontrar_extremos(calificaciones):
-    # return min(calificaciones), max(calificaciones)
     indice_mas_alto = 0
     indice_mas_bajo = 0
-    calificacion_mas_baja = 0
-    calificacion_mas_alta = 0
+    calificación_mas_baja = 0
+    calificación_mas_alta = 0
 
     for index, cal in enumerate(calificaciones):
         if index == 0:
-            calificacion_mas_alta = cal
-            calificacion_mas_baja = cal
+            calificación_mas_alta = cal
+            calificación_mas_baja = cal
             indice_mas_alto = index
             indice_mas_bajo = index
         else:
-            if cal > calificacion_mas_alta:
-                calificacion_mas_alta = cal
+            if cal > calificación_mas_alta:
+                calificación_mas_alta = cal
                 indice_mas_alto = index
             
-            if cal < calificacion_mas_baja:
-                calificacion_mas_baja = cal
+            if cal < calificación_mas_baja:
+                calificación_mas_baja = cal
                 indice_mas_bajo = index
 
     return indice_mas_alto, indice_mas_bajo
@@ -86,7 +85,7 @@ def validar_calificación(calificación):
         return False
 
     # Verificar si la calificación está fuera del rango permitido
-    if CALIFICACIÓN_MÍNIMA < float(calificación) > CALIFICACIÓN_MÁXIMA:
+    if not (CALIFICACIÓN_MÍNIMA <= float(calificación) >= CALIFICACIÓN_MÁXIMA):
         print("Calificación fuera del rango permitido.")
         return False
 
