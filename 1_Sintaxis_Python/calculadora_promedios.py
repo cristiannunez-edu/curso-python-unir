@@ -22,12 +22,10 @@ def ingresar_calificaciones():
             calificación = input(f"Ingrese una calificación (0-10): ")
             calificación_es_válida = validar_calificación(calificación)
 
-        # calificación = float(calificación)
-
         MATERIAS.append(materia)
         CALIFICACIONES.append(float(calificación))
         
-        print(f"✓ Materia \'{materia}\' con calificación \'{calificación}\' agregada correctamente.\n")
+        print(f"Materia \'{materia}\' con calificación \'{calificación}\' agregada correctamente. ✓  \n")
 
         numero += 1
 
@@ -53,7 +51,28 @@ def determinar_estado(calificaciones, umbral = 5.0):
     return indices_aprobadas, indices_reprobadas
 
 def encontrar_extremos(calificaciones):
-    return min(calificaciones), max(calificaciones)
+    # return min(calificaciones), max(calificaciones)
+    indice_mas_alto = 0
+    indice_mas_bajo = 0
+    calificacion_mas_baja = 0
+    calificacion_mas_alta = 0
+
+    for index, cal in enumerate(calificaciones):
+        if index == 0:
+            calificacion_mas_alta = cal
+            calificacion_mas_baja = cal
+            indice_mas_alto = index
+            indice_mas_bajo = index
+        else:
+            if cal > calificacion_mas_alta:
+                calificacion_mas_alta = cal
+                indice_mas_alto = index
+            
+            if cal < calificacion_mas_baja:
+                calificacion_mas_baja = cal
+                indice_mas_bajo = index
+
+    return indice_mas_alto, indice_mas_bajo
 
 def validar_calificación(calificación):
     # Verificar si la calificación está vacía:
@@ -74,23 +93,27 @@ def validar_calificación(calificación):
     return True
 
 def mostrar_resultados():
+    print("[Materia]".ljust(30, ' '), '[Calificación]')
+    for i, materia in enumerate(MATERIAS):
+        print(materia.title().ljust(30, '.'), CALIFICACIONES[i])
+
     print(f"\n\nPROMEDIO GENERAL: {calcular_promedio(CALIFICACIONES)}")
     
     aprobadas, reprobadas = determinar_estado(CALIFICACIONES)
     print(f"\n\nMATERIAS APROBADAS: {len(aprobadas)}\n")
-    print("[Materia aprobada]".ljust(30, ' '), '[Calificación]')
     for i in aprobadas:
         print(MATERIAS[i].title().ljust(30, '.'), CALIFICACIONES[i])
 
     print(f"\n\nMATERIAS REPROBADAS: {len(reprobadas)}\n")
-    print("[Materia reprobada]".ljust(30, ' '), '[Calificación]')
     for i in reprobadas:
         print(MATERIAS[i].title().ljust(30, '.'), CALIFICACIONES[i])
 
-    baja, alta = encontrar_extremos(CALIFICACIONES)
-    print("\n\nCALIFICACIONES:")
-    print(f"Más alta: {alta}")
-    print(f"Más baja: {baja}")
+    indice_alto, indice_bajo = encontrar_extremos(CALIFICACIONES)
+    print("\n\nMATERIA CON MEJOR CALIFICACIÓN")
+    print(MATERIAS[indice_alto].title().ljust(30, '.'), CALIFICACIONES[indice_alto])
+
+    print("\n\nMATERIA CON PEOR CALIFICACIÓN")
+    print(MATERIAS[indice_bajo].title().ljust(30, '.'), CALIFICACIONES[indice_bajo])
 
 def main():
     print("Bienvenido/a a la Calculadora de Promedios Escolares.\n\nEmpezaremos por digitar tus materias con su respectiva calificación. Puedes digitar las materias que quieras.\nCuando termines, presiona la tecla [ESC] para finalizar la entrada de datos.\n\n¡Así que empecemos! ")
