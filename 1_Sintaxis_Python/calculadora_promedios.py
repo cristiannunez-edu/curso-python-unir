@@ -85,14 +85,14 @@ def validar_calificación(calificación):
         return False
 
     # Verificar si la calificación está fuera del rango permitido
-    if not (CALIFICACIÓN_MÍNIMA <= float(calificación) >= CALIFICACIÓN_MÁXIMA):
+    if not (CALIFICACIÓN_MÍNIMA <= float(calificación) <= CALIFICACIÓN_MÁXIMA):
         print("Calificación fuera del rango permitido.")
         return False
 
     return True
 
 def mostrar_resultados():
-    print("[Materia]".ljust(30, ' '), '[Calificación]')
+    print("\n[Materia]".ljust(30, ' '), '[Calificación]')
     for i, materia in enumerate(MATERIAS):
         print(materia.title().ljust(30, '.'), CALIFICACIONES[i])
 
