@@ -1,6 +1,3 @@
-CALIFICACIÓN_MÍNIMA = 0
-CALIFICACIÓN_MÁXIMA = 10
-
 def ingresar_calificaciones():
     numero = 1
     salir = ''
@@ -43,7 +40,8 @@ def calcular_promedio(calificaciones):
 
 # Desarrolla una función determinar_estado(calificaciones, umbral) 
 # que reciba la lista de calificaciones y un valor umbral (por defecto 5.0), 
-# y devuelva dos listas: una con los índices de las materias aprobadas y otra con los índices de las reprobadas.
+# y devuelva dos listas: 
+# una con los índices de las materias aprobadas y otra con los índices de las reprobadas.
 def determinar_estado(calificaciones, umbral = 5.0):
     indices_aprobadas = []
     indices_reprobadas = []
@@ -57,7 +55,8 @@ def determinar_estado(calificaciones, umbral = 5.0):
     return indices_aprobadas, indices_reprobadas
 
 # Implementa una función encontrar_extremos(calificaciones) 
-# que identifique el índice de la calificación más alta y el índice de la más baja en la lista de calificaciones.
+# que identifique el índice de la calificación más alta
+# y el índice de la más baja en la lista de calificaciones.
 def encontrar_extremos(calificaciones):
     calificación_mayor = max(calificaciones)
     calificación_menor = min(calificaciones)
@@ -80,7 +79,7 @@ def validar_calificación(calificación):
         return False
 
     # Verificar si la calificación está fuera del rango permitido
-    if not (CALIFICACIÓN_MÍNIMA <= float(calificación) <= CALIFICACIÓN_MÁXIMA):
+    if not (0 <= float(calificación) <= 10):
         print("Calificación fuera del rango permitido.")
         return False
 
@@ -118,8 +117,7 @@ def mostrar_resultados(materias, calificaciones):
     
     print("\n¡Muchas gracias por usar la Calculadora de Promedio Escolares! Nos vemos en otra ocasión")
 
-# En la función principal (main), 
-# llama a la función ingresar_calificaciones() para obtener los datos del usuario.
+
 def main():
 
     print("Bienvenido/a a la Calculadora de Promedios Escolares.")
