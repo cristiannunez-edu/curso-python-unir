@@ -1,3 +1,14 @@
+"""
+Calculadora de Promedios Escolares.
+
+Este programa permite al usuario ingresar nombres de materias y sus 
+calificaciones, calcula el promedio general, determina el estado 
+(aprobado/reprobado) de cada materia e identifica los extremos 
+(mejor y peor calificación).
+
+Desarrollado por Cristian Silverio Nuñez Mata
+"""
+
 def ingresar_calificaciones():
     """
     Solicita al usuario el nombre de materias y sus calificaciones.
@@ -28,7 +39,7 @@ def ingresar_calificaciones():
         calificacion_es_válida = validar_calificacion(calificacion)
 
         while not calificacion_es_válida:
-            calificacion = input(f"Ingrese una calificacion (0-10): ")
+            calificacion = input("Ingrese una calificacion (0-10): ")
             calificacion_es_válida = validar_calificacion(calificacion)
 
         materias.append(materia)
