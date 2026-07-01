@@ -1,4 +1,15 @@
 def ingresar_calificaciones():
+    """
+    Solicita al usuario el nombre de materias y sus calificaciones.
+
+    Utiliza un bucle while para permitir la entrada de múltiples registros 
+    hasta que el usuario decida terminar. Valida que la calificación esté 
+    dentro del rango permitido (0-10).
+
+    Returns:
+        tuple: (materias, calificaciones) donde 'materias' es una lista de 
+                strings y 'calificaciones' una lista de floats.
+    """
     numero = 1
     salir = ''
 
@@ -9,40 +20,52 @@ def ingresar_calificaciones():
         materia = input(f"Ingrese el nombre de la materia #{numero}: ")
 
         while len(materia.strip()) < 1:
-            materia = input(f"El nombre de la materia no puede estar vacío. Ingrese el nombre de la materia #{numero}: ")
+            materia = input("El nombre de la materia no puede estar vacío. Intente de nuevo ")
 
-        calificación = input("Ingrese la calificación (0-10): ")
+        calificacion = input("Ingrese la calificacion (0-10): ")
 
-        # Validar calificación:
-        calificación_es_válida = validar_calificación(calificación)
+        # Validar calificacion:
+        calificacion_es_válida = validar_calificacion(calificacion)
 
-        while not calificación_es_válida:
-            calificación = input(f"Ingrese una calificación (0-10): ")
-            calificación_es_válida = validar_calificación(calificación)
+        while not calificacion_es_válida:
+            calificacion = input(f"Ingrese una calificacion (0-10): ")
+            calificacion_es_válida = validar_calificacion(calificacion)
 
         materias.append(materia)
-        calificaciones.append(float(calificación))
-        
-        print(f"Materia \'{materia}\' con calificación \'{calificación}\' agregada correctamente. ✓  \n")
+        calificaciones.append(float(calificacion))
+
+        print(f"Materia \'{materia}\' con calificacion \'{calificacion}\' agregada correctamente.")
 
         numero += 1
 
-        salir = input("Si desea continuar presione cualquier tecla; para salir presione la tecla [x]")
-        
+        salir = input("Para continuar presione cualquier tecla; para salir presione la tecla [x]")
+
     print("Entrada de datos finalizada.")
     return materias, calificaciones
 
-# Crea una función calcular_promedio(calificaciones) 
-# que reciba una lista de calificaciones 
-# y devuelva el promedio de todas ellas.
 def calcular_promedio(calificaciones):
+    """
+    Calcula el promedio de una lista de calificaciones.
+
+    Args:
+        calificaciones (list): Lista de números.
+
+    Returns:
+        float: El promedio de los valores ingresados.
+    """
     return round(sum(calificaciones) / len(calificaciones), 1)
 
-# Desarrolla una función determinar_estado(calificaciones, umbral) 
-# que reciba la lista de calificaciones y un valor umbral (por defecto 5.0), 
-# y devuelva dos listas: 
-# una con los índices de las materias aprobadas y otra con los índices de las reprobadas.
 def determinar_estado(calificaciones, umbral = 5.0):
+    """
+    Clasifica las materias según su calificación respecto al umbral de 5.0.
+
+    Args:
+        calificaciones (list): Lista con las calificaciones de las materias.
+
+    Returns:
+        tuple: (aprobadas, reprobadas) conteniendo los índices de las 
+                posiciones en la lista original.
+    """
     indices_aprobadas = []
     indices_reprobadas = []
 
@@ -54,48 +77,69 @@ def determinar_estado(calificaciones, umbral = 5.0):
 
     return indices_aprobadas, indices_reprobadas
 
-# Implementa una función encontrar_extremos(calificaciones) 
-# que identifique el índice de la calificación más alta
-# y el índice de la más baja en la lista de calificaciones.
 def encontrar_extremos(calificaciones):
-    calificación_mayor = max(calificaciones)
-    calificación_menor = min(calificaciones)
-    
-    indice_calificación_mayor = calificaciones.index(calificación_mayor)
-    indice_calificación_menor = calificaciones.index(calificación_menor)
-    
-    return indice_calificación_mayor, indice_calificación_menor
+    """
+    Identifica los índices de las calificaciones más alta y más baja.
+
+    Args:
+        calificaciones (list): Lista de calificaciones.
+
+    Returns:
+        tuple: (indice_calificacion_mayor, indice_calificacion_menor) 
+                correspondientes a la mejor y peor nota.
+    """
+    calificacion_mayor = max(calificaciones)
+    calificacion_menor = min(calificaciones)
+
+    indice_calificacion_mayor = calificaciones.index(calificacion_mayor)
+    indice_calificacion_menor = calificaciones.index(calificacion_menor)
+
+    return indice_calificacion_mayor, indice_calificacion_menor
 
 
-def validar_calificación(calificación):
-    # Verificar si la calificación está vacía:
-    if len(calificación.strip()) < 1:
-        print("La calificación no puede estar vacía.")
+def validar_calificacion(calificacion):
+    """
+    Verifica si el valor ingresado es un número válido entre 0 y 10.
+
+    Args:
+        calificación (str): El valor capturado mediante input.
+
+    Returns:
+        bool: True si es válida, False en caso contrario.
+    """
+    # Verificar si la calificacion está vacía:
+    if len(calificacion.strip()) < 1:
+        print("La calificacion no puede estar vacía.")
         return False
 
-    # Verificar si la calificación no es numérica:
-    if not calificación.isnumeric():
-        print("La calificación debe ser un número.")
+    # Verificar si la calificacion no es numérica:
+    if not calificacion.isnumeric():
+        print("La calificacion debe ser un número.")
         return False
 
-    # Verificar si la calificación está fuera del rango permitido
-    if not (0 <= float(calificación) <= 10):
-        print("Calificación fuera del rango permitido.")
+    # Verificar si la calificacion está fuera del rango permitido.
+    if not 0 <= float(calificacion) <= 10:
+        print("Calificacion fuera del rango permitido.")
         return False
 
     return True
 
 def mostrar_resultados(materias, calificaciones):
-    # Muestra un resumen final que incluya:
-    
+    """Muestra un resumen final con los datos digitados y procesados
+
+    Args:
+        materias (list): lista con los nombres de las materias
+        calificaciones (list): lista con las calificaciones
+    """
+
     # Todas las materias con sus calificaciones
-    print("\n[Materia]".ljust(30, ' '), '[Calificación]')
+    print("\n[Materia]".ljust(30, ' '), '[Calificacion]')
     for i, materia in enumerate(materias):
         print(materia.ljust(30, '.'), calificaciones[i])
 
     # El promedio general
     print(f"\nPROMEDIO GENERAL: {calcular_promedio(calificaciones)}")
-    
+
     # Las materias aprobadas y reprobadas
     aprobadas, reprobadas = determinar_estado(calificaciones)
     print(f"\nMATERIAS APROBADAS: {len(aprobadas)}\n")
@@ -106,29 +150,28 @@ def mostrar_resultados(materias, calificaciones):
     for i in reprobadas:
         print(materias[i].title().ljust(30, '.'), calificaciones[i])
 
-    # La materia con mejor calificación y su valor
+    # La materia con mejor calificacion y su valor
     indice_alto, indice_bajo = encontrar_extremos(calificaciones)
-    print("\nMATERIA CON MEJOR CALIFICACIÓN")
+    print("\nMATERIA CON MEJOR CALIFICACIoN")
     print(materias[indice_alto].title().ljust(30, '.'), calificaciones[indice_alto])
 
-    # La materia con peor calificación y su valor
-    print("\nMATERIA CON PEOR CALIFICACIÓN")
+    # La materia con peor calificacion y su valor
+    print("\nMATERIA CON PEOR CALIFICACIoN")
     print(materias[indice_bajo].title().ljust(30, '.'), calificaciones[indice_bajo])
-    
-    print("\n¡Muchas gracias por usar la Calculadora de Promedio Escolares! Nos vemos en otra ocasión")
-
+    print("\n¡Muchas gracias por usar la Calculadora de Promedio Escolares!")
 
 def main():
-
+    """Función principal que invoca a la función ingresar_calificaciones y 
+    """
     print("Bienvenido/a a la Calculadora de Promedios Escolares.")
-    print("Empezaremos por digitar tus materias con su respectiva calificación.")
-    
+    print("Empezaremos por digitar tus materias con su respectiva calificacion.")
+
     materias, calificaciones = ingresar_calificaciones()
-    
+
     if not materias or not calificaciones:
-        print("No hay materias o calificaciones para procesar. Terminado el programa. Que pase feliz resto del día.")
+        print("No hay materias o calificaciones para procesar. Que pase feliz resto del día.")
         return
-    
+
     mostrar_resultados(materias, calificaciones)
 
 if __name__ == "__main__":
