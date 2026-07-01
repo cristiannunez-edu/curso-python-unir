@@ -127,6 +127,10 @@ def main():
     
     materias, calificaciones = ingresar_calificaciones()
     
+    if not materias or not calificaciones:
+        print("No hay materias o calificaciones para procesar. Terminado el programa. Que pase feliz resto del día.")
+        return
+    
     mostrar_resultados(materias, calificaciones)
 
 if __name__ == "__main__":
