@@ -123,14 +123,18 @@ def validar_calificacion(calificacion):
         print("La calificacion no puede estar vacía.")
         return False
 
-    # Verificar si la calificacion no es numérica:
-    if not calificacion.isnumeric():
-        print("La calificacion debe ser un número.")
-        return False
+    try:
+        # Intentar convertir a float para aceptar decimales
+        valor = float(calificacion)
 
-    # Verificar si la calificacion está fuera del rango permitido.
-    if not 0 <= float(calificacion) <= 10:
-        print("Calificacion fuera del rango permitido.")
+        # Verificar el rango permitido
+        if not 0 <= valor <= 10:
+            print("Calificación fuera del rango permitido (0-10).")
+            return False
+
+    except ValueError:
+        # Si la conversión falla, significa que no es un número válido
+        print("La calificación debe ser un número válido.")
         return False
 
     return True
